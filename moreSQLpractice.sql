@@ -140,3 +140,79 @@ select count(category), category from restaurant group by restaurant.category;
 select count(stars), name from review, restaurant where restaurant_id = restaurant.id and stars = 5 group by restaurant.name;
 --11
 select avg(stars), restaurant.category from review, restaurant where restaurant_id = restaurant.id group by restaurant.category;
+
+--Projects DB Exercises
+
+--1
+select * from project, tech;
+--2
+select * from tech left outer join project_uses_tech on tech_id = tech.id;
+--3
+select * from project left outer join project_uses_tech on project_id = project.id;
+--4
+select
+  *
+from
+  project
+left outer join project_uses_tech
+  on project_id = project.id
+left outer join tech
+  on tech_id = tech.id;
+--5
+select
+  count(tech), project.name
+from
+  project
+left outer join project_uses_tech
+  on project_id = project.id
+left outer join tech
+  on tech_id = tech.id
+group by project.name;
+--6
+select
+  count(project), tech.name
+from
+  project
+left outer join project_uses_tech
+  on project_id = project.id
+left outer join tech
+  on tech_id = tech.id
+group by project.name;
+--7
+select
+  count(tech), project.name
+from
+  project
+left outer join project_uses_tech
+  on project_id = project.id
+left outer join tech
+  on tech_id = tech.id
+group by project.name
+order by project.name desc;
+--8
+select
+  count(project), tech.name
+from
+  project
+left outer join project_uses_tech
+  on project_id = project.id
+left outer join tech
+  on tech_id = tech.id
+group by tech.name
+order by project.name desc;
+--9
+select
+  count(tech), project.name
+  	into
+  		tech_count
+from project
+left outer join project_uses_tech
+  on project_id = project.id
+left outer join tech
+  on tech_id = tech.id
+group by project.name;
+
+select
+	avg(count), tech_count.name
+from tech_count
+group by tech_count.name;
