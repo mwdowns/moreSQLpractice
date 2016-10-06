@@ -211,8 +211,17 @@ left outer join project_uses_tech
 left outer join tech
   on tech_id = tech.id
 group by project.name;
-
+--alternate syntax
 select
-	avg(count), tech_count.name
-from tech_count
-group by tech_count.name;
+	avg(count)
+	from (
+select
+  count(tech), project.name
+  	into
+  		tech_count
+from project
+left outer join project_uses_tech
+  on project_id = project.id
+left outer join tech
+  on tech_id = tech.id
+group by project.name) as tech_count.name;
